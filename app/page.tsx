@@ -97,7 +97,7 @@ export default function Home() {
   const [expenseTitle, setExpenseTitle] = useState("");
   const [expenseAmount, setExpenseAmount] = useState("");
   const [expensePayer, setExpensePayer] = useState("");
-  const [expenseCategory, setExpenseCategory] = useState("Food");
+  const [expenseCategory, setExpenseCategory] = useState("");
   const [expenseCurrency, setExpenseCurrency] = useState("NTD");
   const [editingExpenseId, setEditingExpenseId] = useState<number | null>(null);
   const [expenseParticipants, setExpenseParticipants] =
@@ -819,7 +819,7 @@ useEffect(() => {
                     sortedExpenses.map((expense) => (
                       <div
                         key={expense.id}
-                        className="grid grid-cols-1 gap-3 border-t border-slate-200 px-4 py-4 text-sm md:grid-cols-4 md:items-center"
+                        className="grid grid-cols-4 items-center border-t border-slate-200 px-4 py-3 text-sm"
                       >
                         <div>
                           <p className="text-xs text-slate-500">
@@ -857,7 +857,7 @@ useEffect(() => {
                           </p>
                         </div>
 
-                        <div className="flex flex-wrap gap-2 md:justify-end">
+                        <div className="flex gap-2">
                           <button
                             onClick={() => handleEditExpense(expense)}
                             className="rounded-xl bg-sky-50 px-3 py-2 text-xs font-medium text-sky-600 hover:bg-sky-100"
