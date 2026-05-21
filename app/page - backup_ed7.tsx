@@ -100,7 +100,6 @@ export default function Home() {
   const [expenseCategory, setExpenseCategory] = useState("");
   const [expenseCurrency, setExpenseCurrency] = useState("NTD");
   const [editingExpenseId, setEditingExpenseId] = useState<number | null>(null);
-  const [selectedPerson, setSelectedPerson] = useState("");
   const [expenseParticipants, setExpenseParticipants] =
     useState<string[]>([]);
 
@@ -124,26 +123,6 @@ const categorySummary = expenses.reduce<Record<string, number>>(
     const amountInNTD = convertToBaseCurrency(expense.amount, expense.currency);
 
     summary[expense.category] = (summary[expense.category] || 0) + amountInNTD;
-
-    return summary;
-  },
-  {}
-);
-
-const personalCategorySummary = expenses.reduce<Record<string, number>>(
-  (summary, expense) => {
-    const person = selectedPerson || members[0] || "Personal";
-
-    if (!expense.participants.includes(person)) {
-      return summary;
-    }
-
-    const amountInBase =
-      convertToBaseCurrency(expense.amount, expense.currency) /
-      expense.participants.length;
-
-    summary[expense.category] =
-      (summary[expense.category] || 0) + amountInBase;
 
     return summary;
   },
@@ -1068,51 +1047,6 @@ useEffect(() => {
 
                 <div className="grid gap-3 md:grid-cols-3">
                   {Object.entries(categorySummary).map(([category, total]) => (
-                    <div
-                      key={category}
-                      className="rounded-2xl border border-slate-200 bg-slate-50 p-4"
-                    >
-                      <span
-                        className={`inline-block rounded-full px-2 py-1 text-xs font-medium ${getCategoryStyle(
-                          category
-                        )}`}
-                      >
-                        {category}
-                      </span>
-
-                      <p className="mt-3 text-2xl font-bold">
-                        {baseCurrency} {total.toFixed(2)}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {expenses.length > 0 && (
-              <section className="mt-6 rounded-3xl bg-white p-6 shadow-sm">
-                <h2 className="mb-4 text-xl font-semibold">Personal Spending Summary</h2>
-
-                <div className="mb-4">
-                  <label className="mb-2 block text-sm font-medium text-slate-600">
-                    Select person
-                  </label>
-
-                  <select
-                    value={selectedPerson || members[0] || "Personal"}
-                    onChange={(e) => setSelectedPerson(e.target.value)}
-                    className="rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-sky-500"
-                  >
-                    {(members.length > 0 ? members : ["Personal"]).map((member) => (
-                      <option key={member} value={member}>
-                        {member}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="grid gap-3 md:grid-cols-3">
-                  {Object.entries(personalCategorySummary).map(([category, total]) => (
                     <div
                       key={category}
                       className="rounded-2xl border border-slate-200 bg-slate-50 p-4"
