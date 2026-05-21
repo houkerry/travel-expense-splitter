@@ -97,7 +97,7 @@ export default function Home() {
   const [expenseTitle, setExpenseTitle] = useState("");
   const [expenseAmount, setExpenseAmount] = useState("");
   const [expensePayer, setExpensePayer] = useState("");
-  const [expenseCategory, setExpenseCategory] = useState("");
+  const [expenseCategory, setExpenseCategory] = useState("Food");
   const [expenseCurrency, setExpenseCurrency] = useState("NTD");
   const [editingExpenseId, setEditingExpenseId] = useState<number | null>(null);
   const [selectedPerson, setSelectedPerson] = useState("");
