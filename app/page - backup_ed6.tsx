@@ -301,29 +301,25 @@ while (debtorIndex < debtors.length && creditorIndex < creditors.length) {
       return;
     }
 
-    const updatedMembers = members.filter((member) => member !== memberName);
-    const fallbackPayer = updatedMembers[0] || "Personal";
-
-    setMembers(updatedMembers);
+    setMembers(members.filter((member) => member !== memberName));
 
     setExpenses(
       expenses.map((expense) => ({
         ...expense,
-        payer: expense.payer === memberName ? fallbackPayer : expense.payer,
         participants: expense.participants.filter(
           (participant) => participant !== memberName
         ),
-      }))
-    );
+    }))
+  );
 
-    if (expensePayer === memberName) {
-      setExpensePayer(fallbackPayer);
-    }
+  if (expensePayer === memberName) {
+    setExpensePayer(members.find((member) => member !== memberName) || "");
+  }
 
-    setExpenseParticipants(
-      expenseParticipants.filter((member) => member !== memberName)
-    );
-  };
+  setExpenseParticipants(
+    expenseParticipants.filter((member) => member !== memberName)
+  );
+};
 
   const handleAddExpense = () => {
     const amountNumber = Number(expenseAmount);
@@ -345,7 +341,6 @@ while (debtorIndex < debtors.length && creditorIndex < creditors.length) {
             ? {
                 ...expense,
                 title: expenseTitle,
-                date: expenseDate,
                 amount: expenseAmount,
                 payer: expensePayer,
                 participants: expenseParticipants,
@@ -1060,7 +1055,7 @@ useEffect(() => {
                       </span>
 
                       <p className="mt-3 text-2xl font-bold">
-                        {baseCurrency} {total.toFixed(2)}
+                        {baseCurrency} {totalExpense.toFixed(2)}
                       </p>
                     </div>
                   ))}
